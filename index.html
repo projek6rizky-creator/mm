@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jadwalin – Jadwal Pelajaran Digital</title>
+  <script>try{document.documentElement.setAttribute("data-theme",localStorage.getItem("jadwalin-theme")==="dark"?"dark":"light")}catch(e){}</script>
+  <link rel="stylesheet" href="css/themes.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <main class="landing">
+    <div>
+      <h1>📘 Jadwalin</h1>
+      <p class="muted">Kelola jadwal pelajaran kamu dengan rapi.</p>
+      <div class="spinner" aria-label="Memuat"></div>
+      <p><a href="pages/login.html">Klik di sini jika tidak dialihkan otomatis</a></p>
+    </div>
+  </main>
+  <script type="module">
+    import { supabase, isConfigured } from "./services/supabase.js";
+    let target = "pages/login.html";
+    if (isConfigured) {
+      try {
+        const { data } = await supabase.auth.getSession();
+        if (data && data.session) target = "pages/dashboard.html";
+      } catch (e) { console.error(e); }
+    }
+    location.replace(target);
+  </script>
+</body>
+</html>
